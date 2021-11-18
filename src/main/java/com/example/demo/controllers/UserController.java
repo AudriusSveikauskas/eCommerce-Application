@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +21,8 @@ import com.example.demo.model.requests.CreateUserRequest;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -47,12 +51,32 @@ public class UserController {
 		Cart cart = new Cart();
 		cartRepository.save(cart);
 		user.setCart(cart);
-		if (createUserRequest.getPassword().length() < 7 ||
-				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
+
+		if (createUserRequest.getPassword().length() < 7) {
+
+			/** Logging */
+			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
+					"ERROR", 400, "api/user/create", createUserRequest.getUsername(), "Password too short (length = " + createUserRequest.getPassword().length() + ").");
+
 			return ResponseEntity.badRequest().build();
 		}
+
+		if (!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
+
+			/** Logging */
+			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
+					"ERROR", 400, "api/user/create", createUserRequest.getUsername(), "Passwords does not match.");
+
+			return ResponseEntity.badRequest().build();
+		}
+
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
+
+		/** Logging */
+		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
+				"INFO", 200, "api/user/create", createUserRequest.getUsername(), "User created successfully.");
+
 		return ResponseEntity.ok(user);
 	}
 	
