@@ -41,7 +41,7 @@ public class CartController {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/cart/addToCart/", user.getUsername(), "User not found.");
 
@@ -50,7 +50,7 @@ public class CartController {
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/cart/addToCart/", user.getUsername(), "Item not found.");
 
@@ -61,7 +61,7 @@ public class CartController {
 			.forEach(i -> cart.addItem(item.get()));
 		cartRepository.save(cart);
 
-		/** Logging */
+		/* Logging */
 		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 				"INFO", 200, "api/cart/addToCart/", user.getUsername(), "Cart saved successfully.");
 
@@ -73,7 +73,7 @@ public class CartController {
 		User user = userRepository.findByUsername(request.getUsername());
 		if(user == null) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/cart/removeFromCart/", user.getUsername(), "User not found.");
 
@@ -82,7 +82,7 @@ public class CartController {
 		Optional<Item> item = itemRepository.findById(request.getItemId());
 		if(!item.isPresent()) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/cart/removeFromCart/", user.getUsername(), "Item not found.");
 
@@ -93,7 +93,7 @@ public class CartController {
 			.forEach(i -> cart.removeItem(item.get()));
 		cartRepository.save(cart);
 
-		/** Logging */
+		/* Logging */
 		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 				"INFO", 200, "api/cart/removeFromCart/", user.getUsername(), "Item removed from cart successfully.");
 

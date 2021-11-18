@@ -35,7 +35,7 @@ public class OrderController {
 		User user = userRepository.findByUsername(username);
 		if(user == null) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/order/submit/" + user.getUsername(), user.getUsername(), "User not found.");
 
@@ -44,7 +44,7 @@ public class OrderController {
 		UserOrder order = UserOrder.createFromCart(user.getCart());
 		orderRepository.save(order);
 
-		/** Logging */
+		/* Logging */
 		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 				"INFO", 200, "api/order/submit/" + user.getUsername(), user.getUsername(), "Order created successfully, (total = $" + order.getTotal() + ").");
 
@@ -56,14 +56,14 @@ public class OrderController {
 		User user = userRepository.findByUsername(username);
 		if(user == null) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 404, "api/order/history/" + user.getUsername(), user.getUsername(), "User not found.");
 
 			return ResponseEntity.notFound().build();
 		}
 
-		/** Logging */
+		/* Logging */
 		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 				"INFO", 200, "api/order/history/" + user.getUsername(), user.getUsername(), "User order history printed successfully.");
 

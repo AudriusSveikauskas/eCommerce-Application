@@ -54,7 +54,7 @@ public class UserController {
 
 		if (createUserRequest.getPassword().length() < 7) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 400, "api/user/create", createUserRequest.getUsername(), "Password too short (length = " + createUserRequest.getPassword().length() + ").");
 
@@ -63,7 +63,7 @@ public class UserController {
 
 		if (!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
 
-			/** Logging */
+			/* Logging */
 			log.error("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 					"ERROR", 400, "api/user/create", createUserRequest.getUsername(), "Passwords does not match.");
 
@@ -73,7 +73,7 @@ public class UserController {
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
 
-		/** Logging */
+		/* Logging */
 		log.info("Type: {} | Status: {} | Source: {} | Username: {} | Description: {}",
 				"INFO", 200, "api/user/create", createUserRequest.getUsername(), "User created successfully.");
 
