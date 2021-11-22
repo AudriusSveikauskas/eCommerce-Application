@@ -47,13 +47,13 @@ public class ItemControllerTest {
         assertNotNull(item);
     }
 
-//    @Test
-//    public void getItemByIdExceptionTest() {
-//        when(itemRepository.findById(1L)).thenReturn(Optional.of(createItem()));
-//        ResponseEntity<Item> response = itemController.getItemById(2L);
-//        assertNotNull(response);
-//        assertEquals(404, response.getStatusCodeValue());
-//    }
+    @Test
+    public void getItemByIdExceptionTest() {
+        when(itemRepository.findById(1L)).thenReturn(Optional.of(createItem()));
+        ResponseEntity<Item> response = itemController.getItemById(2L);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
 
     @Test
     public void getItemsByNameTest() {
@@ -66,14 +66,14 @@ public class ItemControllerTest {
         assertEquals(items, response.getBody());
     }
 
-//    @Test
-//    public void getItemsByNameExceptionTest() {
-//        List<Item> items = new ArrayList<>();
-//        items.add(createItem());
-//        when(itemRepository.findByName("testItem")).thenReturn(items);
-//        ResponseEntity<List<Item>> response = itemController.getItemsByName("testItem2");
-//        assertNotNull(response);
-//        assertEquals(404, response.getStatusCodeValue());
-//    }
+    @Test
+    public void getItemsByNameExceptionTest() {
+        List<Item> items = new ArrayList<>();
+        items.add(createItem());
+        when(itemRepository.findByName("testItem")).thenReturn(items);
+        ResponseEntity<List<Item>> response = itemController.getItemsByName("testItem2");
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
 
 }

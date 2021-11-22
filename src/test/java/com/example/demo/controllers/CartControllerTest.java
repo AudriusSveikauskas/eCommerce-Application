@@ -37,16 +37,7 @@ public class CartControllerTest {
 
     @Test
     public void addToCartTest() {
-        User user = createUser();
-        Item item = createItem();
-        Cart cart = user.getCart();
-
-        cart.addItem(item);
-        cart.setUser(user);
-        user.setCart(cart);
-
-        when(userRepository.findByUsername("testUsername")).thenReturn(user);
-        when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
+        atTheBeginningOfEachTest();
 
         ModifyCartRequest modifyCartRequest = createModifyCartRequest("testUsername", 1L, 1);
         ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
@@ -66,16 +57,7 @@ public class CartControllerTest {
 
     @Test
     public void addToCartExceptionTest() {
-        User user = createUser();
-        Item item = createItem();
-        Cart cart = user.getCart();
-
-        cart.addItem(item);
-        cart.setUser(user);
-        user.setCart(cart);
-
-        when(userRepository.findByUsername("testUsername")).thenReturn(user);
-        when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
+        atTheBeginningOfEachTest();
 
         ModifyCartRequest modifyCartRequest = createModifyCartRequest("testUsername", 2L, 1);
         ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
@@ -86,16 +68,7 @@ public class CartControllerTest {
 
     @Test
     public void removeFromCartTest() {
-        User user = createUser();
-        Item item = createItem();
-        Cart cart = user.getCart();
-
-        cart.addItem(item);
-        cart.setUser(user);
-        user.setCart(cart);
-
-        when(userRepository.findByUsername("testUsername")).thenReturn(user);
-        when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
+        atTheBeginningOfEachTest();
 
         ModifyCartRequest modifyCartRequest = createModifyCartRequest("testUsername", 1L, 1);
         ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
@@ -116,6 +89,16 @@ public class CartControllerTest {
 
     @Test
     public void removeFromCartExceptionTest() {
+        atTheBeginningOfEachTest();
+
+        ModifyCartRequest modifyCartRequest = createModifyCartRequest("testUsername", 2L, 1);
+        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    private void atTheBeginningOfEachTest() {
         User user = createUser();
         Item item = createItem();
         Cart cart = user.getCart();
@@ -126,12 +109,6 @@ public class CartControllerTest {
 
         when(userRepository.findByUsername("testUsername")).thenReturn(user);
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
-
-        ModifyCartRequest modifyCartRequest = createModifyCartRequest("testUsername", 2L, 1);
-        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
-
-        assertNotNull(response);
-        assertEquals(404, response.getStatusCodeValue());
     }
 
 }
